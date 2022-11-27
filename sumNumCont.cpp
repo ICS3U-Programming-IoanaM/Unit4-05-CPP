@@ -6,15 +6,15 @@
 // the user inputs for a given amount of numbers
 
 #include <iostream>
-#include <sstream>
 
 int main() {
     // variable declaration
-    std::string amountOfNumsStr, sumDisplayed;
-    int amountOfNumsInt, counter, userNum, totalSum;
+    std::string amountOfNumsStr, sumDisplayed, userNumStr;
+    int amountOfNumsInt, counter, userNumInt, totalSum;
 
     // variable initialisation
     counter = 0;
+    totalSum = 0;
 
     // getting user input for the amount of numbers the user wants to add
     std::cout << "How many numbers do you want to add? ";
@@ -32,28 +32,35 @@ int main() {
             while (counter < amountOfNumsInt) {
                 // gets the numbers the user
                 std::cout << "Enter the number you would like to add: ";
-                std::cin >> userNum;
+                std::cin >> userNumStr;
 
-                // user num is negative
-                if (userNum < 0) {
-                    std::cout << "Invalid Input! Please enter a whole number!"
-                              << std::endl;
+                try {
+                    userNumInt = stoi(userNumStr);
 
-                // user num is whole
-                } else {
-                    counter++;
+                    // user num is negative
+                    if (userNumInt < 0) {
+                        std::cout << "Invalid Input! Please enter "
+                        << "a whole number!"<< std::endl;
 
-                    // calculates the sum
-                    totalSum += userNum;
+                    // user num is whole
+                    } else {
+                        counter++;
 
-                    // its not the last time a number will be entered
-                    if (counter != amountOfNumsInt) {
-                        sumDisplayed += std::to_string(userNum) + " + ";
-                        continue;
+                        // calculates the sum
+                        totalSum += userNumInt;
+
+                        // its not the last time a number will be entered
+                        if (counter != amountOfNumsInt) {
+                            sumDisplayed += std::to_string(userNumInt) + " + ";
+                            continue;
+                        }
+                        // its the last time a number will be entered
+                        sumDisplayed += std::to_string(userNumInt) +
+                        " = " + std::to_string(totalSum);
                     }
-                    // its the last time a number will be entered
-                        sumDisplayed += std::to_string(userNum) + " = "
-                                     + std::to_string(userNum);
+                } catch(std::invalid_argument) {
+                    std::cout << "Invalid Input! Please enter"
+                              << " a whole number!" << std::endl;
                 }
             }
             std::cout << sumDisplayed << std::endl;
